@@ -10,7 +10,7 @@ public class CustomConditions {
 
             //this method executes a script to check that there are no more things loading in page
             public Boolean apply(WebDriver driver) {
-                return (Boolean) ((JavascriptExecutor) driver).executeScript("return (window.jQuery != null) && (jQuery.active == = 0);");
+                return (Boolean) ((JavascriptExecutor) driver).executeScript("return (window.jQuery != null) && (jQuery.active === 0);");
             }
         };
     }
