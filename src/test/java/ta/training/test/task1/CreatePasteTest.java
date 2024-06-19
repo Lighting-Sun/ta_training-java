@@ -1,11 +1,11 @@
-package ta.training.test;
+package ta.training.test.task1;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import ta.training.page_object_model.page.PasteBinHomePage;
+import ta.training.page_object_model.page.task1.PasteBinHomePage;
 
 import java.time.Duration;
 
