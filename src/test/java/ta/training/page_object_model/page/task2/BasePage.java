@@ -12,9 +12,7 @@ public abstract class BasePage {
 
     protected WebDriver driver;
 
-    protected BasePage openPage() {
-        throw new RuntimeException("You need to provide a paste id");
-    }
+    protected abstract BasePage openPage();
     protected BasePage (WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver,this);
