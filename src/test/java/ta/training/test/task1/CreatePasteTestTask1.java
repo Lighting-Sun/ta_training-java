@@ -5,11 +5,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import ta.training.page_object_model.page.task1.PasteBinHomePage;
+import ta.training.page_object_model.page.task1.PasteBinHomePageTask1;
 
 import java.time.Duration;
 
-public class CreatePasteTest {
+public class CreatePasteTestTask1 {
 
     WebDriver driver;
 
@@ -30,9 +30,9 @@ public class CreatePasteTest {
     @Test(description = "Create a new paste with duration of 10 Minutes")
     public void create10MinuteDurationPaste() {
 
-        PasteBinHomePage pasteBinHomePage = new PasteBinHomePage(driver);
+        PasteBinHomePageTask1 pasteBinHomePageTask1 = new PasteBinHomePageTask1(driver);
 
-        pasteBinHomePage.openPage()
+        pasteBinHomePageTask1.openPage()
                 .fillPasteContent("Hello from WebDriver")
                 .selectPasteExpiration()
                 .fillPasteName("helloweb")

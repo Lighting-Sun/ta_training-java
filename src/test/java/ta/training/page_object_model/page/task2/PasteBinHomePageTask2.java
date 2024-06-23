@@ -1,4 +1,4 @@
-package ta.training.page_object_model.page.task1;
+package ta.training.page_object_model.page.task2;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,33 +10,37 @@ import ta.training.CustomConditions;
 
 import java.time.Duration;
 
-public class PasteBinHomePage {
+public class PasteBinHomePageTask2 extends BasePage {
 
-    private WebDriver driver;
 
     public static final String HOMEPAGE_URL = "https://pastebin.com/";
-
     @FindBy(id = "postform-text")
     private WebElement textAreaInput;
 
     @FindBy(id = "postform-name")
     private WebElement pasteNameInput;
 
+    @FindBy(xpath = "//div[@class='form-group field-postform-format']//span[@class='selection']")
+    private WebElement pasteFormatSpan;
+
+    @FindBy(xpath = "//li[contains(@aria-label,'POPULAR LANGUAGES')]/ul/li[text()='Bash']")
+    public WebElement bashFormatOption;
+
     @FindBy(xpath = "//div[@class='form-group field-postform-expiration']//span[@class='selection']")
     private WebElement pasteExpirationSpan;
 
     @FindBy(xpath = "//ul[@id='select2-postform-expiration-results']/li[text()='10 Minutes']")
-    private WebElement tenMinutesExpirationOption;
+    public WebElement tenMinutesExpirationOption;
 
     @FindBy(xpath = "//button[text()='Create New Paste']")
     private WebElement createPasteButton;
 
-    public PasteBinHomePage(WebDriver driver){
-        this.driver = driver;
-        PageFactory.initElements(driver,this);
+    public PasteBinHomePageTask2(WebDriver driver) {
+        super(driver);
     }
 
-    public PasteBinHomePage openPage (){
+    @Override
+    public PasteBinHomePageTask2 openPage() {
         //using customs conditions
         driver.get(HOMEPAGE_URL);
         new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -44,37 +48,32 @@ public class PasteBinHomePage {
         return this;
     }
 
-    private PasteBinHomePage sendKeysToInput(WebElement webElement, String content){
-       WebElement element = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable( webElement));
-       element.click();
-       element.sendKeys(content);
-       return this;
+    public void fillPasteContent(String pasteContent) {
+        sendKeysToInput(textAreaInput, pasteContent);
     }
 
-    private PasteBinHomePage clickOnElement(WebElement webElement){
-        WebElement element = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(webElement));
-        element.click();
-        return this;
+    public void selectPasteExpiration(WebElement optionToSelect) {
+        clickOnElement(pasteExpirationSpan);
+        clickOnElement(optionToSelect);
     }
 
-    public PasteBinHomePage fillPasteContent(String pasteContent){
-        return sendKeysToInput(textAreaInput,pasteContent);
+    public void selectSyntaxFormat(WebElement optionToSelect) {
+        clickOnElement(pasteFormatSpan);
+        clickOnElement(optionToSelect);
     }
 
-    public PasteBinHomePage selectPasteExpiration(){
-       return clickOnElement(pasteExpirationSpan).clickOnElement(tenMinutesExpirationOption);
-    }
+    public String pasteName;
 
-    public PasteBinHomePage fillPasteName (String pasteName){
-        return sendKeysToInput(pasteNameInput,pasteName);
+    public void fillPasteName(String pasteName) {
+        this.pasteName = pasteName;
+        sendKeysToInput(pasteNameInput, pasteName);
     }
 
     //it is ok for this method to return void because this is the end of the list of calls for the first task
     //in the future this method can be expanded so the return value will pass the driver to another page
-    public void clickOnCreatePaste(){
+    public PasteDetailsPage clickOnCreatePaste() {
         clickOnElement(createPasteButton);
+        return new PasteDetailsPage(driver);
     }
 
 }
