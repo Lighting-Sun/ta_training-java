@@ -32,10 +32,10 @@ public class CreatePasteTestTask1 {
 
         PasteBinHomePageTask1 pasteBinHomePageTask1 = new PasteBinHomePageTask1(driver);
 
-        pasteBinHomePageTask1.openPage()
-                .fillPasteContent("Hello from WebDriver")
-                .selectPasteExpiration()
-                .fillPasteName("helloweb")
-                .clickOnCreatePaste();
+        pasteBinHomePageTask1.openPage();
+        pasteBinHomePageTask1.fillPasteContent("Hello from WebDriver");
+        pasteBinHomePageTask1.selectPasteExpiration();
+        pasteBinHomePageTask1.fillPasteName("helloweb");
+        pasteBinHomePageTask1.clickOnCreatePaste();
     }
 }

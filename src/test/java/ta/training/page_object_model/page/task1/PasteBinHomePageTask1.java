@@ -10,6 +10,12 @@ import ta.training.CustomConditions;
 
 import java.time.Duration;
 
+/**
+ * This class represents the home page task for PasteBin, providing methods
+ * to interact with the web elements on the home page using Selenium WebDriver.
+ *
+ * @author Harvey C
+ */
 public class PasteBinHomePageTask1 {
 
     private WebDriver driver;
@@ -31,50 +37,80 @@ public class PasteBinHomePageTask1 {
     @FindBy(xpath = "//button[text()='Create New Paste']")
     private WebElement createPasteButton;
 
-    public PasteBinHomePageTask1(WebDriver driver){
+    /**
+     * Constructor to initialize the WebDriver and PageFactory.
+     *
+     * @param driver the WebDriver instance used to interact with the web page
+     */
+    public PasteBinHomePageTask1(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
     }
 
-    public PasteBinHomePageTask1 openPage (){
-        //using customs conditions
+    /**
+     * Opens the PasteBin home page and waits for jQuery AJAX requests to complete.
+     */
+    public void openPage() {
+        // using custom conditions
         driver.get(HOMEPAGE_URL);
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(CustomConditions.jQueryAJAXsCompleted());
-        return this;
     }
 
-    private PasteBinHomePageTask1 sendKeysToInput(WebElement webElement, String content){
-       WebElement element = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable( webElement));
-       element.click();
-       element.sendKeys(content);
-       return this;
-    }
-
-    private PasteBinHomePageTask1 clickOnElement(WebElement webElement){
+    /**
+     * Sends the specified content to the given web element after waiting for it to be clickable.
+     *
+     * @param webElement the web element to send keys to
+     * @param content the content to send to the web element
+     */
+    private void sendKeysToInput(WebElement webElement, String content) {
         WebElement element = new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.elementToBeClickable(webElement));
         element.click();
-        return this;
+        element.sendKeys(content);
     }
 
-    public PasteBinHomePageTask1 fillPasteContent(String pasteContent){
-        return sendKeysToInput(textAreaInput,pasteContent);
+    /**
+     * Clicks on the given web element after waiting for it to be clickable.
+     *
+     * @param webElement the web element to click on
+     */
+    private void clickOnElement(WebElement webElement) {
+        WebElement element = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(webElement));
+        element.click();
     }
 
-    public PasteBinHomePageTask1 selectPasteExpiration(){
-       return clickOnElement(pasteExpirationSpan).clickOnElement(tenMinutesExpirationOption);
+    /**
+     * Fills the paste content text area with the specified content.
+     *
+     * @param pasteContent the content to be pasted in the text area
+     */
+    public void fillPasteContent(String pasteContent) {
+        sendKeysToInput(textAreaInput, pasteContent);
     }
 
-    public PasteBinHomePageTask1 fillPasteName (String pasteName){
-        return sendKeysToInput(pasteNameInput,pasteName);
+    /**
+     * Selects the paste expiration option of 10 minutes.
+     */
+    public void selectPasteExpiration() {
+        clickOnElement(pasteExpirationSpan);
+        clickOnElement(tenMinutesExpirationOption);
     }
 
-    //it is ok for this method to return void because this is the end of the list of calls for the first task
-    //in the future this method can be expanded so the return value will pass the driver to another page
-    public void clickOnCreatePaste(){
+    /**
+     * Fills the paste name input field with the specified paste name.
+     *
+     * @param pasteName the name to be entered in the paste name input field
+     */
+    public void fillPasteName(String pasteName) {
+        sendKeysToInput(pasteNameInput, pasteName);
+    }
+
+    /**
+     * Clicks on the create paste button to submit the paste.
+     */
+    public void clickOnCreatePaste() {
         clickOnElement(createPasteButton);
     }
-
 }
