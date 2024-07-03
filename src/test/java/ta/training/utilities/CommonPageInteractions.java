@@ -38,7 +38,7 @@ public class CommonPageInteractions {
      * @param content the text content to be sent.
      */
     public void sendKeysToInput(WebElement webElement, String content) {
-        WebElement element = new WebDriverWait(this.driver, Duration.ofSeconds(10))
+        WebElement element = new WebDriverWait(this.driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.elementToBeClickable(webElement));
         element.click();
         element.sendKeys(content);
@@ -51,7 +51,7 @@ public class CommonPageInteractions {
      * @param webElement the web element to be clicked.
      */
     public void clickOnElement(WebElement webElement) {
-        WebElement element = new WebDriverWait(this.driver, Duration.ofSeconds(10))
+        WebElement element = new WebDriverWait(this.driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.elementToBeClickable(webElement));
         element.click();
     }

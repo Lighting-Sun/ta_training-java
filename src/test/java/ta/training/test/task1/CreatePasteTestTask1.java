@@ -21,14 +21,16 @@ public class CreatePasteTestTask1 {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void tearDown() {
+    public void tearDown() throws InterruptedException {
+        //this thread sleep is added so the reviewer can see if the values are filled correctly
+        Thread.sleep(5000);
         if (this.driver != null) {
             this.driver.quit();
         }
     }
 
     @Test(description = "Create a new paste with duration of 10 Minutes")
-    public void create10MinuteDurationPaste() {
+    public void create10MinuteDurationPaste() throws InterruptedException {
 
         PasteBinHomePageTask1 pasteBinHomePageTask1 = new PasteBinHomePageTask1(driver);
 
@@ -36,6 +38,8 @@ public class CreatePasteTestTask1 {
         pasteBinHomePageTask1.fillPasteContent("Hello from WebDriver");
         pasteBinHomePageTask1.selectPasteExpiration();
         pasteBinHomePageTask1.fillPasteName("helloweb");
+        //this thread sleep is added so the reviewer can see if the values are filled correctly before continuing to the next page
+        Thread.sleep(5000);
         pasteBinHomePageTask1.clickOnCreatePaste();
     }
 }

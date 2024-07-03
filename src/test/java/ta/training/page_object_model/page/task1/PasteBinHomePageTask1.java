@@ -35,6 +35,9 @@ public class PasteBinHomePageTask1 {
     @FindBy(xpath = "//button[text()='Create New Paste']")
     private WebElement createPasteButton;
 
+    @FindBy(xpath = "//vli[@class='vliIgnore']")
+    private WebElement closeBottomAddButton;
+
     /**
      * Constructor to initialize the WebDriver and PageFactory.
      *
@@ -62,7 +65,7 @@ public class PasteBinHomePageTask1 {
      * @param content the content to send to the web element
      */
     private void sendKeysToInput(WebElement webElement, String content) {
-        WebElement element = new WebDriverWait(driver, Duration.ofSeconds(10))
+        WebElement element = new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.elementToBeClickable(webElement));
         element.click();
         element.sendKeys(content);
@@ -74,7 +77,7 @@ public class PasteBinHomePageTask1 {
      * @param webElement the web element to click on
      */
     private void clickOnElement(WebElement webElement) {
-        WebElement element = new WebDriverWait(driver, Duration.ofSeconds(10))
+        WebElement element = new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.elementToBeClickable(webElement));
         element.click();
     }
@@ -107,8 +110,15 @@ public class PasteBinHomePageTask1 {
 
     /**
      * Clicks on the create paste button to submit the paste.
+     * If an exception occurs, it clicks on the close bottom ad button
+     * and retries clicking on the create paste button.
      */
     public void clickOnCreatePaste() {
-        clickOnElement(createPasteButton);
+        try {
+            clickOnElement(createPasteButton);
+        } catch (Exception e) {
+            clickOnElement(closeBottomAddButton);
+            clickOnElement(createPasteButton);
+        }
     }
 }

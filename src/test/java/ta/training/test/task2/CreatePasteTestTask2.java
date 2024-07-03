@@ -23,7 +23,9 @@ public class CreatePasteTestTask2 {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void tearDown() {
+    public void tearDown() throws InterruptedException {
+        //this thread sleep is added so the reviewer can see if the values are filled correctly before the driver gets closed
+        Thread.sleep(5000);
         if (this.driver != null) {
             this.driver.quit();
         }
@@ -40,7 +42,7 @@ public class CreatePasteTestTask2 {
     }
 
     @Test(description = "Create a paste and validate the paste format and content",dataProvider = "pasteContents")
-    public void createAPasteAndValidateFormattingAndContent(String expectedPasteContent) {
+    public void createAPasteAndValidateFormattingAndContent(String expectedPasteContent) throws InterruptedException {
 
         String expectedPasteName = "how to gain dominance among developers";
         String textFormat = "Bash";
@@ -51,6 +53,8 @@ public class CreatePasteTestTask2 {
         pasteBinHomePageTask2.clickSpecificFormatOption(textFormat);
         pasteBinHomePageTask2.selectPasteExpiration("10 Minutes");
         pasteBinHomePageTask2.fillPasteName(expectedPasteName);
+        //Added this thead sleep so the reviewer can see if the values are filled correctly before passing to the next page
+        Thread.sleep(5000);
         pasteBinHomePageTask2.clickOnCreatePaste();
 
         PasteDetailsPage pasteDetailsPage = new PasteDetailsPage(driver);

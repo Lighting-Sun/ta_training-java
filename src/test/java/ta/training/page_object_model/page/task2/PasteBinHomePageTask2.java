@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ta.training.CustomConditions;
+import ta.training.utilities.CommonPageInteractions;
 
 import java.time.Duration;
 
@@ -39,6 +40,9 @@ public class PasteBinHomePageTask2 extends BasePage {
 
     @FindBy(xpath = "//button[text()='Create New Paste']")
     private WebElement createPasteButton;
+
+    @FindBy(xpath = "//vli[@class='vliIgnore']")
+    private WebElement closeBottomAddButton;
 
     /**
      * Constructor to initialize the WebDriver and the PasteBinHomePageTask2 page elements.
@@ -103,9 +107,16 @@ public class PasteBinHomePageTask2 extends BasePage {
     }
 
     /**
-     * Clicks on the button to create a new paste.
+     * Clicks on the create paste button to submit the paste.
+     * If an exception occurs, it clicks on the close bottom ad button
+     * and retries clicking on the create paste button.
      */
     public void clickOnCreatePaste() {
-        commonPageInteractions.clickOnElement(createPasteButton);
+        try {
+            commonPageInteractions.clickOnElement(createPasteButton);
+        } catch (Exception e) {
+            commonPageInteractions.clickOnElement(closeBottomAddButton);
+            commonPageInteractions.clickOnElement(createPasteButton);
+        }
     }
 }
