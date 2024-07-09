@@ -4,11 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ta.training.CustomConditions;
-import ta.training.utilities.CommonPageInteractions;
 
 import java.time.Duration;
 
@@ -72,7 +69,7 @@ public class PasteBinHomePageTask2 extends BasePage {
      * @param pasteContent the content to be pasted.
      */
     public void fillPasteContent(String pasteContent) {
-        commonPageInteractions.sendKeysToInput(textAreaInput, pasteContent);
+        commonPageInteractions.sendTextToInput(textAreaInput, pasteContent);
     }
 
     /**
@@ -103,7 +100,7 @@ public class PasteBinHomePageTask2 extends BasePage {
      * @param pasteName the name of the paste.
      */
     public void fillPasteName(String pasteName) {
-        commonPageInteractions.sendKeysToInput(pasteNameInput, pasteName);
+        commonPageInteractions.sendTextToInput(pasteNameInput, pasteName);
     }
 
     /**

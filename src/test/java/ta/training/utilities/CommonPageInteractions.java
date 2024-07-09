@@ -1,7 +1,10 @@
 package ta.training.utilities;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -21,38 +24,99 @@ public class CommonPageInteractions {
     /** The WebDriver instance used to interact with the web browser. */
     private final WebDriver driver;
 
+    /** Selenium actions helper */
+    protected Actions actions;
+
+    /** WebDriverWait wait helper*/
+    protected WebDriverWait wait;
+
+
     /**
-     * Constructor to initialize the WebDriver for common page interactions.
+     * Initializes a new instance of the CommonPageInteractions class.
      *
-     * @param driver the WebDriver instance to be used by this class.
+     * @param driver the WebDriver instance to interact with the web page.
      */
     public CommonPageInteractions(WebDriver driver) {
         this.driver = driver;
+        this.actions = new Actions(this.driver);
+        this.wait = new WebDriverWait(this.driver, Duration.ofMillis(10000));
     }
 
     /**
-     * Sends the specified text content to the given web element (input field).
-     * Waits until the element is clickable before performing the action.
+     * Sends specified content to an input element.
      *
-     * @param webElement the web element (input field) to send the text to.
-     * @param content the text content to be sent.
+     * @param webElement the WebElement representing the input element.
+     * @param content    the text content to send to the input element.
      */
-    public void sendKeysToInput(WebElement webElement, String content) {
-        WebElement element = new WebDriverWait(this.driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.elementToBeClickable(webElement));
-        element.click();
-        element.sendKeys(content);
+    public void sendTextToInput(WebElement webElement, String content) {
+        actions.scrollToElement(webElement);
+        wait.until(ExpectedConditions.visibilityOf(webElement));
+        wait.until(ExpectedConditions.elementToBeClickable(webElement));
+        webElement.click();
+        webElement.sendKeys(Keys.BACK_SPACE);
+        webElement.sendKeys(content);
     }
 
     /**
-     * Clicks on the given web element.
-     * Waits until the element is clickable before performing the action.
+     * Sends specified content to an input element.
      *
-     * @param webElement the web element to be clicked.
+     * @param webElement the WebElement representing the input element.
+     * @param keys    specific keys content to send to the input element.
+     */
+    public void sendKeysToInput(WebElement webElement, Keys keys) {
+        actions.scrollToElement(webElement);
+        wait.until(ExpectedConditions.visibilityOf(webElement));
+        wait.until(ExpectedConditions.elementToBeClickable(webElement));
+        webElement.click();
+        webElement.sendKeys(keys);
+    }
+
+    /**
+     * Clicks on a specified web element.
+     *
+     * @param webElement the WebElement to be clicked.
      */
     public void clickOnElement(WebElement webElement) {
-        WebElement element = new WebDriverWait(this.driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.elementToBeClickable(webElement));
-        element.click();
+        actions.scrollToElement(webElement);
+        wait.until(ExpectedConditions.visibilityOf(webElement));
+        wait.until(ExpectedConditions.elementToBeClickable(webElement));
+        webElement.click();
+    }
+
+    /**
+     * Retrieves a web element located by a specified locator waiting for it to be present .
+     *
+     * @param locator the By locator used to find the web element.
+     * @return the WebElement found using the specified locator.
+     */
+    public WebElement getWebElement(By locator) {
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+    /**
+     * Retrieves the text content of a specified web element.
+     *
+     * @param webElement the WebElement whose text content is to be retrieved.
+     * @return the text content of the specified web element.
+     */
+    public String getWebElementText(WebElement webElement) {
+        actions.scrollToElement(webElement);
+        wait.until(ExpectedConditions.visibilityOf(webElement));
+        return webElement.getText();
+    }
+
+    /**
+     * Waits until the text of a specified web element contains the expected value.
+     *
+     * @param webElement    the WebElement whose text is to be matched.
+     * @param expectedValue the expected text value.
+     */
+    public void waitUntilWebElementTextHasExpectedValue(WebElement webElement, String expectedValue) {
+        actions.scrollToElement(webElement);
+        try {
+            wait.until(ExpectedConditions.textToBePresentInElement(webElement, expectedValue));
+        } catch (Exception e) {
+            System.out.println("Wait for text presence in element timed out. Text value for this element is: " + webElement.getText());
+        }
     }
 }
