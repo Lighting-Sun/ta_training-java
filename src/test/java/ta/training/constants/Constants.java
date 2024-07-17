@@ -14,7 +14,6 @@ public class Constants {
     public static final String REGION = "Region";
     public static final String PROVISIONING_MODEL = "Provisioning Model";
     public static final String COMMITTED_USE_DISCOUNT_OPTIONS = "Committed use discount options";
-    public static final String TOTAL_ESTIMATED_COST = "Total Estimated Cost";
 
     private Constants() {
         throw new UnsupportedOperationException("This is a constants class and cannot be instantiated");

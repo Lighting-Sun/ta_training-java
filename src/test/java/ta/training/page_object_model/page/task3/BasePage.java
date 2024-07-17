@@ -47,26 +47,20 @@ public abstract class BasePage {
      * indicating so.
      * </p>
      */
-    public void switchToNewTab(){
+    public void switchToNewTab(String tabTitle){
         String actualTab = driver.getWindowHandle();
-
-        String newTabHandle = null;
+        String newTabHandle;
 
         Set<String> handles = driver.getWindowHandles();
         for (String handle : handles) {
             if (!handle.equals(actualTab)) {
                 newTabHandle = handle;
-                break;
+                driver.switchTo().window(newTabHandle);
+                if (driver.getTitle().contains(tabTitle)){
+                    System.out.println("Desired tab found");
+                    break;
+                }
             }
-        }
-
-        // Switch to the new tab
-        if (newTabHandle != null) {
-            driver.switchTo().window(newTabHandle);
-            //logging so user knows if driver switched to new tab
-            System.out.println("Switched to new tab");
-        } else {
-            System.out.println("No new tab found");
         }
     }
 }

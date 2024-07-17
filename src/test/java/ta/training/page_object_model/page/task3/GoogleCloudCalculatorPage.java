@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import ta.training.model.CalculatorForm;
 
 import static ta.training.constants.Constants.*;
 
@@ -95,36 +96,33 @@ public class GoogleCloudCalculatorPage extends BasePage{
     }
 
     /**
+     * Checks for the presence of the "Welcome to Google Cloud's Pricing Calculator" H1 element.
+     *
+     * @return true if the H1 element is present, false otherwise
+     */
+    public boolean presenceOfWelcomeToGoogleCloudsPricingCalculatorH1() {
+        return commonPageInteractions.waitUntilWebElementIsPresentByLocator(By.xpath("//h1"));
+    }
+
+    /**
      * Fills out the estimate form with the provided values. submits it by clicking on share and open estimate summary
      *
-     * @param numberOfInstances              the number of instances.
-     * @param operatingSystem                the operating system.
-     * @param provisioningModel              the provisioning model.
-     * @param machineFamily                  the machine family.
-     * @param series                         the series.
-     * @param machineType                    the machine type.
-     * @param gpuModel                       the GPU model.
-     * @param numberOfGPUs                   the number of GPUs.
-     * @param localSSD                       the local SSD.
-     * @param region                         the region.
-     * @param committedUseDiscountsOption    the committed use discounts option.
-     * @param estimatedCost                  the estimated cost.
+     * @param formData the data to fill the form with
      */
-    public void fillAndSubmitEstimateForm(String numberOfInstances, String operatingSystem, String provisioningModel, String machineFamily, String series, String machineType,
-                                 String gpuModel, String numberOfGPUs, String localSSD, String region, String committedUseDiscountsOption, String estimatedCost) {
-        commonPageInteractions.sendTextToInput(numberOfInstancesInput, numberOfInstances);
-        setSelectOptionByName(OPERATING_SYSTEM_SOFTWARE, operatingSystem);
-        commonPageInteractions.clickOnElement(getButtonByName(provisioningModel));
-        setSelectOptionByName(MACHINE_FAMILY, machineFamily);
-        setSelectOptionByName(SERIES, series);
-        setSelectOptionByName(MACHINE_TYPE, machineType);
+    public void fillAndSubmitEstimateForm(CalculatorForm formData) {
+        commonPageInteractions.sendTextToInput(numberOfInstancesInput, formData.getNumberOfInstances());
+        setSelectOptionByName(OPERATING_SYSTEM_SOFTWARE, formData.getOperatingSystemSoftware());
+        commonPageInteractions.clickOnElement(getButtonByName(formData.getProvisioningModel()));
+        setSelectOptionByName(MACHINE_FAMILY, formData.getMachineFamily());
+        setSelectOptionByName(SERIES, formData.getSeries());
+        setSelectOptionByName(MACHINE_TYPE, formData.getMachineType());
         commonPageInteractions.clickOnElement(addGPUsButton);
-        setSelectOptionByName(GPU_MODEL, gpuModel);
-        setSelectOptionByName(NUMBER_OF_GPUS, numberOfGPUs);
-        setSelectOptionByName(LOCAL_SSD, localSSD);
-        setSelectOptionByName(REGION, region);
-        commonPageInteractions.clickOnElement(getButtonByName(committedUseDiscountsOption));
-        commonPageInteractions.waitUntilWebElementTextHasExpectedValue(estimatedCostValue, estimatedCost);
+        setSelectOptionByName(GPU_MODEL, formData.getGpuModel());
+        setSelectOptionByName(NUMBER_OF_GPUS, formData.getNumberOfGpus());
+        setSelectOptionByName(LOCAL_SSD, formData.getLocalSsd());
+        setSelectOptionByName(REGION, formData.getRegion());
+        commonPageInteractions.clickOnElement(getButtonByName(formData.getCommittedUseDiscountOptions()));
+        commonPageInteractions.waitUntilWebElementTextHasExpectedValue(estimatedCostValue, formData.getTotalEstimatedCost());
         commonPageInteractions.clickOnElement(shareButton);
         commonPageInteractions.clickOnElement(openEstimateSummaryButton);
     }

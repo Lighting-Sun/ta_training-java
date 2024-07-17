@@ -35,6 +35,15 @@ public class GoogleCloudSearchResultsPage extends BasePage{
         commonPageInteractions.clickOnElement(getSearchResultByName(strResultname));
     }
 
+    /**
+     * Checks for the presence of the search summary AI div element.
+     *
+     * @return true if the search summary AI div element is present, false otherwise
+     */
+    public boolean presenceOfSearchSummaryAiDiv() {
+        return commonPageInteractions.waitUntilWebElementIsPresentByLocator(By.xpath("//div[@track-metadata-module='search-summary']"));
+    }
+
     @Override
     protected GoogleCloudSearchResultsPage openPage() {
         throw new RuntimeException("This page should not be directly open by calling this method");

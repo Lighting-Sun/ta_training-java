@@ -119,4 +119,20 @@ public class CommonPageInteractions {
             System.out.println("Wait for text presence in element timed out. Text value for this element is: " + webElement.getText());
         }
     }
+
+    /**
+     * Waits until the web element is present in the DOM using the specified locator.
+     *
+     * @param locator the locator used to find the element
+     * @return true if the element is present before the timeout, false otherwise
+     */
+    public boolean waitUntilWebElementIsPresentByLocator(By locator) {
+        try {
+            wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+            return true;
+        } catch (Exception e) {
+            System.out.println("Wait for presence of element timed out. locator used: " + locator);
+            return false;
+        }
+    }
 }

@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="group 3 test" verbose="1">
+    <test name="group 3 tests">
+        <groups>
+            <run>
+                <include name="group3"/>
+            </run>
+        </groups>
+        <packages>
+            <package name="ta.training.test.task3"/>
+        </packages>
+    </test>
+</suite>

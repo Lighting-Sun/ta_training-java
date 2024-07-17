@@ -47,7 +47,14 @@ public class GoogleCloudCalculatorPreviewPage extends BasePage{
         super(driver);
     }
 
-
+    /**
+     * Checks for the presence of the "Cost Estimate Summary" H4 element.
+     *
+     * @return true if the H4 element is present, false otherwise
+     */
+    public boolean presenceOfCostEstimateSummaryH4(){
+        return commonPageInteractions.waitUntilWebElementIsPresentByLocator(By.xpath("//h4[text()='Cost Estimate Summary']"));
+    }
 
     @Override
     protected GoogleCloudCalculatorPreviewPage openPage() {

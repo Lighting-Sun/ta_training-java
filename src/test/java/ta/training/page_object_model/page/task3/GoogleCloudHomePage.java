@@ -1,5 +1,6 @@
 package ta.training.page_object_model.page.task3;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,6 +26,16 @@ public class GoogleCloudHomePage extends BasePage{
 
     @FindBy(xpath = "//input[@placeholder='Search']")
     private WebElement searchInput;
+
+
+    /**
+     * Checks for the presence of the "New way to cloud starts here" H1 element.
+     *
+     * @return true if the H1 element is present, false otherwise
+     */
+    public boolean presenceOfNewWayToCloudStartsHereH1(){
+           return commonPageInteractions.waitUntilWebElementIsPresentByLocator(By.xpath("//h1//p"));
+    }
 
     /**
      * Performs the search action based on a text input
