@@ -19,20 +19,22 @@ public class GoogleCloudSearchResultsPage extends BasePage{
     /**
      * Finds a search result element based on its text.
      *
-     * @param strResultname the text of the search result.
+     * @param strResultText the text of the search result.
      * @return the WebElement of the search result that matches the given text.
      */
-    private WebElement getSearchResultByName(String strResultname) {
-        return commonPageInteractions.getWebElement(By.xpath("//a[text()='" + strResultname + "']"));
+    private WebElement getSearchResultByName(String strResultText) {
+        logger.info("Getting search result element from result text "+ strResultText);
+        return commonPageInteractions.getWebElement(By.xpath("//a[text()='" + strResultText + "']"));
     }
 
     /**
      * Clicks on a search result element based on its text.
      *
-     * @param strResultname the text of the search result to be clicked.
+     * @param strResultText the text of the search result to be clicked.
      */
-    public void clickOnSearchResult(String strResultname) {
-        commonPageInteractions.clickOnElement(getSearchResultByName(strResultname));
+    public void clickOnSearchResult(String strResultText) {
+        logger.info("Clicking on a search result from text " + strResultText);
+        commonPageInteractions.clickOnElement(getSearchResultByName(strResultText));
     }
 
     /**

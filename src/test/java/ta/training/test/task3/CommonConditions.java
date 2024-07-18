@@ -3,13 +3,16 @@ package ta.training.test.task3;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import ta.training.driver.DriverSingleton;
+import ta.training.utilities.TestListener;
 
 /**
  * Class containing common conditions for setting up and tearing down the WebDriver instance.
  *
  * @author Harvey C
  */
+@Listeners({TestListener.class})
 public class CommonConditions {
 
     /** WebDriver instance used for the tests. */

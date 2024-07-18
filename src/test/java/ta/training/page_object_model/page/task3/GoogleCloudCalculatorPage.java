@@ -38,6 +38,7 @@ public class GoogleCloudCalculatorPage extends BasePage{
      * @return the WebElement of the combobox that is associated with the given text.
      */
     private WebElement getSelectByName(String strSelectName) {
+        logger.info("Getting Select by name: " + strSelectName);
         return commonPageInteractions.getWebElement(By.xpath("//span[text()='" + strSelectName + "']/ancestor::div[@role='combobox']"));
     }
 
@@ -48,6 +49,7 @@ public class GoogleCloudCalculatorPage extends BasePage{
      * @return the WebElement of the list item that contains the given text.
      */
     private WebElement getSelectOptionByName(String strSelectOptionName) {
+        logger.info("Getting Select Option by name: " + strSelectOptionName);
         return commonPageInteractions.getWebElement(By.xpath("//ul/li//span[text()='" + strSelectOptionName + "']/ancestor::li"));
     }
 
@@ -58,6 +60,7 @@ public class GoogleCloudCalculatorPage extends BasePage{
      * @return the WebElement of the button that is associated with the given text.
      */
     private WebElement getButtonByName(String strButtonName) {
+        logger.info("Getting Button by name: " + strButtonName);
         return commonPageInteractions.getWebElement(By.xpath("//label[text()='" + strButtonName + "']/parent::div"));
     }
 
@@ -85,6 +88,7 @@ public class GoogleCloudCalculatorPage extends BasePage{
     public void setSelectOptionByName(String strSelectName, String strSelectOptionName) {
         commonPageInteractions.clickOnElement(getSelectByName(strSelectName));
         commonPageInteractions.clickOnElement(getSelectOptionByName(strSelectOptionName));
+        logger.info("Clicking on select "+ strSelectName +" and clicking on the option "+ strSelectOptionName);
     }
 
     /**
@@ -93,6 +97,7 @@ public class GoogleCloudCalculatorPage extends BasePage{
     public void clickOnAddToEstimateAndSelectComputeEngine() {
         commonPageInteractions.clickOnElement(addToEstimateButton);
         commonPageInteractions.clickOnElement(computeEngineCard);
+        logger.info("Clicking on Add to Estimate and select Compute Engine");
     }
 
     /**
@@ -122,8 +127,11 @@ public class GoogleCloudCalculatorPage extends BasePage{
         setSelectOptionByName(LOCAL_SSD, formData.getLocalSsd());
         setSelectOptionByName(REGION, formData.getRegion());
         commonPageInteractions.clickOnElement(getButtonByName(formData.getCommittedUseDiscountOptions()));
+        logger.info("clicking on " + formData.getCommittedUseDiscountOptions());
         commonPageInteractions.waitUntilWebElementTextHasExpectedValue(estimatedCostValue, formData.getTotalEstimatedCost());
         commonPageInteractions.clickOnElement(shareButton);
+        logger.info("clicking on Share button");
         commonPageInteractions.clickOnElement(openEstimateSummaryButton);
+        logger.info("clicking on Open Estimate Summary Button");
     }
 }

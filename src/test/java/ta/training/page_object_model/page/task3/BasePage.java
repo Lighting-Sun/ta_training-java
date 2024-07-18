@@ -1,8 +1,11 @@
 package ta.training.page_object_model.page.task3;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import ta.training.utilities.CommonPageInteractions;
 import java.util.Set;
+
 /**
  * Abstract base class for all page objects. Provides common functionality and serves as a parent class
  * for all specific page objects in the web application.
@@ -13,6 +16,8 @@ import java.util.Set;
  * @author Harvey C
  */
 public abstract class BasePage {
+
+    protected final Logger logger = LogManager.getRootLogger();
 
     /** The WebDriver instance used to interact with the web browser. */
     protected WebDriver driver;
@@ -57,7 +62,7 @@ public abstract class BasePage {
                 newTabHandle = handle;
                 driver.switchTo().window(newTabHandle);
                 if (driver.getTitle().contains(tabTitle)){
-                    System.out.println("Desired tab found");
+                    logger.info("Switched to tab that contains "+ tabTitle +" in the title");
                     break;
                 }
             }

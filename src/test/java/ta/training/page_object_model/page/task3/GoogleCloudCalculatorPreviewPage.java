@@ -15,6 +15,7 @@ public class GoogleCloudCalculatorPreviewPage extends BasePage{
      * @return the text content of the total estimated cost value.
      */
     public String getTotalEstimatedCostValueText() {
+        logger.info("The total Estimated Cost Value is: " + totalEstimatedCostValue.getText());
         return totalEstimatedCostValue.getText();
     }
 
@@ -35,6 +36,7 @@ public class GoogleCloudCalculatorPreviewPage extends BasePage{
      * @return the text content of the span that follows the span with the given text.
      */
     public String getSpanTextByName(String strSpanName) {
+        logger.info("Text from span "+ strSpanName+ " is: "+ commonPageInteractions.getWebElementText(getSpanByName(strSpanName)));
         return commonPageInteractions.getWebElementText(getSpanByName(strSpanName));
     }
 

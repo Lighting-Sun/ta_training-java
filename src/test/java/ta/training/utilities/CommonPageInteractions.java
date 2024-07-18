@@ -1,5 +1,7 @@
 package ta.training.utilities;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -20,6 +22,11 @@ import java.time.Duration;
  * @author Harvey C
  */
 public class CommonPageInteractions {
+
+    /**
+     * Logger instance for logging messages.
+     */
+    private Logger logger = LogManager.getRootLogger();
 
     /** The WebDriver instance used to interact with the web browser. */
     private final WebDriver driver;
@@ -116,7 +123,7 @@ public class CommonPageInteractions {
         try {
             wait.until(ExpectedConditions.textToBePresentInElement(webElement, expectedValue));
         } catch (Exception e) {
-            System.out.println("Wait for text presence in element timed out. Text value for this element is: " + webElement.getText());
+            logger.info("Wait for text presence in element timed out. Text value for this element is: " + webElement.getText());
         }
     }
 
@@ -131,7 +138,7 @@ public class CommonPageInteractions {
             wait.until(ExpectedConditions.presenceOfElementLocated(locator));
             return true;
         } catch (Exception e) {
-            System.out.println("Wait for presence of element timed out. locator used: " + locator);
+            logger.info("Wait for presence of element timed out. locator used: " + locator);
             return false;
         }
     }

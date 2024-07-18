@@ -10,8 +10,6 @@ public class GoogleCloudHomePage extends BasePage{
 
     public static final String GOOGLE_CLOUD_PAGE = "https://cloud.google.com";
 
-
-
     /**
      * Constructor to initialize the WebDriver and common page interactions.
      *
@@ -45,6 +43,7 @@ public class GoogleCloudHomePage extends BasePage{
     public void searchText(String textToSearch){
         commonPageInteractions.clickOnElement(searchButton);
         commonPageInteractions.sendTextToInput(searchInput,textToSearch);
+        logger.info("Searching "+ textToSearch +" text in Search bar");
         commonPageInteractions.sendKeysToInput(searchInput, Keys.ENTER);
     }
 
@@ -55,6 +54,7 @@ public class GoogleCloudHomePage extends BasePage{
      */
     @Override
     public GoogleCloudHomePage openPage() {
+        logger.info("Opening "+ GOOGLE_CLOUD_PAGE +" page");
         driver.get(GOOGLE_CLOUD_PAGE);
         return this;
     }

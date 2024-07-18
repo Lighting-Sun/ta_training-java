@@ -1,10 +1,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="group 3 test" verbose="1">
-    <test name="group 3 tests">
+<suite name="group fail test" verbose="1">
+    <test name="group fail tests">
         <groups>
             <run>
-                <include name="group3"/>
+                <include name="groupFail"/>
             </run>
         </groups>
         <packages>

@@ -12,7 +12,7 @@ import ta.training.service.FormCreator;
 
 import static ta.training.constants.Constants.*;
 
-public class GoogleCloudEstimateCalculationTest extends CommonConditions{
+public class GoogleCloudEstimateCalculationTest extends CommonConditions {
 
     @DataProvider(name = "formData")
     public static Object[][] getData() {
@@ -20,7 +20,7 @@ public class GoogleCloudEstimateCalculationTest extends CommonConditions{
         return new Object[][]{{formDataMap}};
     }
 
-    @Test(description = "Fill the google cloud calculator form and validate filled information against preview",dataProvider = "formData")
+    @Test(description = "Fill the google cloud calculator form and validate filled information against preview", dataProvider = "formData")
     public void calculateGoogleCloudEstimateAllTests(CalculatorForm calculatorForm) {
 
         GoogleCloudCalculatorPreviewPage googleCloudCalculatorPreviewPage = task3TestFlow();
@@ -38,7 +38,7 @@ public class GoogleCloudEstimateCalculationTest extends CommonConditions{
     }
 
 
-    @Test(description = "Fill the google cloud calculator form and validate filled information against preview",dataProvider = "formData",groups = {"smoke"})
+    @Test(description = "Fill the google cloud calculator form and validate filled information against preview", dataProvider = "formData", groups = {"smoke"})
     public void calculateGoogleCloudEstimateSmoke(CalculatorForm calculatorForm) {
 
         GoogleCloudCalculatorPreviewPage googleCloudCalculatorPreviewPage = task3TestFlow();
@@ -55,12 +55,13 @@ public class GoogleCloudEstimateCalculationTest extends CommonConditions{
         Assert.assertTrue("Expected Total estimated cost matches estimate preview", googleCloudCalculatorPreviewPage.getTotalEstimatedCostValueText().contains(calculatorForm.getTotalEstimatedCost()));
     }
 
-    @Test(description = "Fill the google cloud calculator form and validate filled information against preview",dataProvider = "formData",groups = {"group3"})
+    @Test(description = "Fill the google cloud calculator form and validate filled information against preview", dataProvider = "formData", groups = {"groupFail"})
     public void calculateGoogleCloudEstimateGroup3(CalculatorForm calculatorForm) {
 
         GoogleCloudCalculatorPreviewPage googleCloudCalculatorPreviewPage = task3TestFlow();
 
-        Assert.assertEquals("Expected Number of Instances matches estimate preview", calculatorForm.getNumberOfInstances(), googleCloudCalculatorPreviewPage.getSpanTextByName(NUMBER_OF_INSTANCES));
+        //This following assert makes the test fail, so it can take the screen capture
+        Assert.assertEquals("Expected Number of Instances matches estimate preview", "6", googleCloudCalculatorPreviewPage.getSpanTextByName(NUMBER_OF_INSTANCES));
         Assert.assertEquals("Expected Operating system/software value matches estimate preview", calculatorForm.getOperatingSystemSoftware(), googleCloudCalculatorPreviewPage.getSpanTextByName(OPERATING_SYSTEM_SOFTWARE));
         Assert.assertEquals("Expected Provisioning model matches estimate preview", calculatorForm.getProvisioningModel(), googleCloudCalculatorPreviewPage.getSpanTextByName(PROVISIONING_MODEL));
         Assert.assertEquals("Machine Type expected matches estimate preview", calculatorForm.getExpectedMachineType(), googleCloudCalculatorPreviewPage.getSpanTextByName(MACHINE_TYPE));
@@ -73,24 +74,28 @@ public class GoogleCloudEstimateCalculationTest extends CommonConditions{
     }
 
 
-
-    private GoogleCloudCalculatorPreviewPage task3TestFlow (){
+    private GoogleCloudCalculatorPreviewPage task3TestFlow() {
+        //creates a CalculatorForm object with test data
         CalculatorForm calculatorForm = FormCreator.withFieldsFilled();
 
+        //Opens the Google Cloud Home page and search for Google Cloud Platform Pricing Calculator
         GoogleCloudHomePage googleCloudHomePage = new GoogleCloudHomePage(driver);
         googleCloudHomePage.openPage();
         Assert.assertTrue(googleCloudHomePage.presenceOfNewWayToCloudStartsHereH1());
         googleCloudHomePage.searchText("Google Cloud Platform Pricing Calculator");
 
+        //Clicks Google Cloud Pricing Calculator search result on the search results page
         GoogleCloudSearchResultsPage googleCloudSearchResultsPage = new GoogleCloudSearchResultsPage(driver);
-        Assert.assertTrue( googleCloudSearchResultsPage.presenceOfSearchSummaryAiDiv());
+        Assert.assertTrue(googleCloudSearchResultsPage.presenceOfSearchSummaryAiDiv());
         googleCloudSearchResultsPage.clickOnSearchResult("Google Cloud Pricing Calculator");
 
+        //Fills the Google Calculator Form using the CalculatorForm object and submits it
         GoogleCloudCalculatorPage googleCloudCalculatorPage = new GoogleCloudCalculatorPage(driver);
         Assert.assertTrue(googleCloudCalculatorPage.presenceOfWelcomeToGoogleCloudsPricingCalculatorH1());
         googleCloudCalculatorPage.clickOnAddToEstimateAndSelectComputeEngine();
         googleCloudCalculatorPage.fillAndSubmitEstimateForm(calculatorForm);
 
+        //Switches to the newly opened calculator Preview Page tab
         GoogleCloudCalculatorPreviewPage googleCloudCalculatorPreviewPage = new GoogleCloudCalculatorPreviewPage(driver);
         googleCloudCalculatorPreviewPage.switchToNewTab("Estimate Summary");
         Assert.assertTrue(googleCloudCalculatorPreviewPage.presenceOfCostEstimateSummaryH4());
