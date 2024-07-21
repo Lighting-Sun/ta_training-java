@@ -55,8 +55,9 @@ public class GoogleCloudEstimateCalculationTest extends CommonConditions {
         Assert.assertTrue("Expected Total estimated cost matches estimate preview", googleCloudCalculatorPreviewPage.getTotalEstimatedCostValueText().contains(calculatorForm.getTotalEstimatedCost()));
     }
 
-    @Test(description = "Fill the google cloud calculator form and validate filled information against preview", dataProvider = "formData", groups = {"groupFail"})
-    public void calculateGoogleCloudEstimateGroup3(CalculatorForm calculatorForm) {
+    @Test(description = "Fill the google cloud calculator form and validate filled information against preview, this will fail an take a screenshot",
+            dataProvider = "formData", groups = {"groupFail"})
+    public void calculateGoogleCloudEstimateGroupFail(CalculatorForm calculatorForm) {
 
         GoogleCloudCalculatorPreviewPage googleCloudCalculatorPreviewPage = task3TestFlow();
 
