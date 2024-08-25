@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Set;
 
 /**
  * This class provides common interactions with web elements on a web page.
@@ -123,7 +124,7 @@ public class CommonPageInteractions {
         try {
             wait.until(ExpectedConditions.textToBePresentInElement(webElement, expectedValue));
         } catch (Exception e) {
-            logger.info("Wait for text presence in element timed out. Text value for this element is: " + webElement.getText());
+            logger.error("Wait for text presence in element timed out. Text value for this element is: " + webElement.getText());
         }
     }
 
@@ -138,7 +139,7 @@ public class CommonPageInteractions {
             wait.until(ExpectedConditions.presenceOfElementLocated(locator));
             return true;
         } catch (Exception e) {
-            logger.info("Wait for presence of element timed out. locator used: " + locator);
+            logger.error("Wait for presence of element timed out. locator used: " + locator);
             return false;
         }
     }
